@@ -1,0 +1,45 @@
+project:
+  type: book
+  output-dir: _book
+
+book:
+  title: "空间数据科学与 R 语言"
+  subtitle: "应用于出行行业"
+  output-file: "sdsr"
+  author: "黄湘云"
+  date: "2022-04-05"
+  chapters:
+    - index.qmd
+    - intro.qmd
+    - summary.qmd
+    - references.qmd
+  site-url: https://evalparse.github.io/sdsr/
+  repo-url: https://github.com/evalparse/sdsr/
+  repo-branch: main
+  repo-actions: [edit]
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: cosmo
+  pdf:
+    documentclass: ctexbook
+    classoption: [a4, UTF8]
+    lof: true
+    lot: true
+    toc: true
+    toc-title: 目录
+    toc-depth: 3
+    geometry:
+      - tmargin=2.5cm
+      - bmargin=2.5cm
+      - lmargin=3.0cm
+      - rmargin=2.0cm
+    highlight-style: github
+    number-sections: true
+    top-level-division: chapter
+    colorlinks: true
+
+editor: visual
+

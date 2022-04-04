@@ -1,0 +1,73 @@
+# 空间数据
+
+In summary, this book has no content whatsoever.
+
+```{r}
+library(sf)
+```
+
+```{r,eval=FALSE}
+install.packages(c("mapproj", "showtext"))
+```
+
+```{r}
+library(sp)
+library(raster)
+```
+
+`methods(plot)` 星号 * 标记的是 S3 方法。
+
+```{r plot-methods, echo=FALSE}
+knitr::kable(matrix(data = methods(plot), ncol = 2, byrow = T),
+  col.names = NA, caption = "plot 方法"
+)
+```
+
+
+```{r unemp-maps}
+#| fig.cap="2009 年美国各个城镇的失业率分布",
+#| fig.width=6*1.5,
+#| fig.height=4*1.75,
+#| fig.align="center",
+#| fig.showtext=TRUE,
+#| collapse=TRUE
+
+# 代码调整自帮助文档 ?map
+library(maps)
+library(mapproj)
+# 失业率数据
+data(unemp)
+# 行政编码
+data(county.fips)
+# 准备调色板
+colors <- viridisLite::plasma(9)
+# 失业率划分区间
+unemp$colorBuckets <- as.numeric(cut(unemp$unemp, c(seq(0, 10, by = 2), 15, 20, 25, 100)))
+# 准备图例文本
+leg.txt <- c("<2%", "2-4%", "4-6%", "6-8%", "8-10%", 
+             "10-15%", "15-20%", "20-25%", ">25%")
+
+cnty.fips <- county.fips$fips[match(
+  map("county", plot = FALSE)$names,
+  county.fips$polyname
+)]
+
+# 匹配上的区域
+colorsmatched <- unemp$colorBuckets[match(cnty.fips, unemp$fips)]
+par(mar = c(1.5, 0, 2, 0))
+# 绘制区县地图
+map("county",
+  col = colors[colorsmatched], fill = TRUE, resolution = 0,
+  lty = 0, projection = "polyconic", mar = c(0.5, 0.5, 2, 0.5)
+)
+# 添加州边界线
+map("state",
+  col = "white", fill = FALSE, add = TRUE,
+  lty = 1, lwd = 0.2, projection = "polyconic"
+)
+# 添加图标题
+title("2009 年美国各个城镇的失业率")
+mtext(text = "数据源：美国人口调查局", side = 1, adj = 0)
+# 添加图例
+legend("top", leg.txt, horiz = TRUE, fill = colors, cex = 0.85)
+```
