@@ -1,9 +1,34 @@
 # 前言 {.unnumbered}
 
-This is a Quarto book.
+本书是在[Quarto](https://quarto.org/docs/books)编辑的，为可重复性，书籍写作环境由 Docker 搭建，基础环境来自 [rocker](https://github.com/rocker-org) 项目提供的空间数据 [geospatial](https://github.com/rocker-org/rocker-versioned2) 镜像。首先安装 Docker 桌面客户端，拉取远程镜像文件：
 
-To learn more about Quarto books visit <https://quarto.org/docs/books>.
+``` bash
+brew install --cask homebrew/cask/docker
+docker pull rocker/geospatial
+```
+
+然后从下载的镜像启动容器，配置 RStudio Server 登陆账户、映射本地端口 8282 和挂载本地文件目录。
+
+``` bash
+docker run -itd -p 8282:8787 --rm --name=sdsr \
+  --privileged=true -v "/${PWD}:/home/rstudio" \
+  -e USER=rstudio -e PASSWORD=cloud2016 rocker/geospatial:latest
+```
+
+打开网址 <http://localhost:8282>，输入账户 `rstudio` 和密码 `cloud2016`，登陆后即可进入开发环境。书籍写作还用到其它一些 R 包和 LaTeX 宏包，需额外安装。
+
+```{r,eval=FALSE}
+# 安装 R 包
+install.packages(c("mapproj", "showtext", "styler"))
+# 安装 LaTeX 宏包
+tinytex::tlmgr_install(readLines("texlive.txt"))
+```
+
+因此，本书完整编译环境如下：
 
 ```{r}
-1 + 1
+xfun::session_info(packages = c(
+  "tinytex", "rmarkdown", "bookdown", "quarto", "showtext",
+  "maps", "mapproj", "sf", "sp", "raster"
+))
 ```

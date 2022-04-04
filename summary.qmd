@@ -1,36 +1,31 @@
 # 空间数据
 
-In summary, this book has no content whatsoever.
-
-```{r}
-library(sf)
-```
-
-```{r,eval=FALSE}
-install.packages(c("mapproj", "showtext"))
-```
+在 R 环境中，一切都是对象，一切操作都是函数调用。以最常见的绘图函数 `plot()` 为例，它是一个泛型函数，遇到不同的数据对象调用不同的绘图方法，在空间数据可视化领域，R 包 **sp** 和 **raster** 都提供扩展 `plot()` 的方法。读者可在控制台运行命令 `methods(plot)` 查看当前命名空间加载的所有方法，其中星号 \* 标记的是 S3 方法， @tbl-plot-methods 列出了当前可用的方法。
 
 ```{r}
 library(sp)
 library(raster)
+library(sf)
 ```
-
-`methods(plot)` 星号 * 标记的是 S3 方法。
-
-```{r plot-methods, echo=FALSE}
+```{r}
+#| label: tbl-plot-methods
+#| tbl-cap: "plot 方法"
+#| echo: false
 knitr::kable(matrix(data = methods(plot), ncol = 2, byrow = T),
-  col.names = NA, caption = "plot 方法"
+  col.names = c("第一列", "第二列")
 )
 ```
 
+@fig-unemp-maps 呈现 2009 年美国各个城镇的失业率分布。
 
-```{r unemp-maps}
-#| fig.cap="2009 年美国各个城镇的失业率分布",
-#| fig.width=6*1.5,
-#| fig.height=4*1.75,
-#| fig.align="center",
-#| fig.showtext=TRUE,
-#| collapse=TRUE
+```{r}
+#| label: fig-unemp-maps
+#| fig-cap: "2009 年美国各个城镇的失业率分布"
+#| fig-width: 9
+#| fig-height: 7
+#| fig-align: "center"
+#| fig-showtext: true
+#| collapse: true
 
 # 代码调整自帮助文档 ?map
 library(maps)
@@ -42,16 +37,19 @@ data(county.fips)
 # 准备调色板
 colors <- viridisLite::plasma(9)
 # 失业率划分区间
-unemp$colorBuckets <- as.numeric(cut(unemp$unemp, c(seq(0, 10, by = 2), 15, 20, 25, 100)))
+unemp$colorBuckets <- as.numeric(cut(
+  unemp$unemp, c(seq(0, 10, by = 2), 15, 20, 25, 100)
+))
 # 准备图例文本
-leg.txt <- c("<2%", "2-4%", "4-6%", "6-8%", "8-10%", 
-             "10-15%", "15-20%", "20-25%", ">25%")
-
+leg.txt <- c(
+  "<2%", "2-4%", "4-6%", "6-8%", "8-10%",
+  "10-15%", "15-20%", "20-25%", ">25%"
+)
+# 地图数据和 FIPS 数据
 cnty.fips <- county.fips$fips[match(
   map("county", plot = FALSE)$names,
   county.fips$polyname
 )]
-
 # 匹配上的区域
 colorsmatched <- unemp$colorBuckets[match(cnty.fips, unemp$fips)]
 par(mar = c(1.5, 0, 2, 0))
@@ -71,3 +69,4 @@ mtext(text = "数据源：美国人口调查局", side = 1, adj = 0)
 # 添加图例
 legend("top", leg.txt, horiz = TRUE, fill = colors, cex = 0.85)
 ```
+

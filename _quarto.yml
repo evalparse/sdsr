@@ -4,7 +4,7 @@ project:
 
 book:
   title: "空间数据科学与 R 语言"
-  subtitle: "应用于出行行业"
+  subtitle: "探索和实践"
   output-file: "sdsr"
   author: "黄湘云"
   date: "2022-04-05"
@@ -20,9 +20,17 @@ book:
 
 bibliography: references.bib
 
+
+
 format:
   html:
     theme: cosmo
+    crossref:
+      chapters: true
+      fig-title: "图"
+      tbl-title: "表"
+      fig-prefix: "图"
+      tbl-prefix: "表"
   pdf:
     documentclass: ctexbook
     classoption: [a4, UTF8]
@@ -40,6 +48,14 @@ format:
     number-sections: true
     top-level-division: chapter
     colorlinks: true
+    crossref:
+      chapters: true
+      fig-title: "图"
+      tbl-title: "表"
+      lof-title: "图目录"
+      lot-title: "表目录"
+      fig-prefix: "图"
+      tbl-prefix: "表"
 
 editor: visual
 
