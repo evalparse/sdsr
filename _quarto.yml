@@ -2,6 +2,8 @@ project:
   type: book
   output-dir: _book
 
+lang: zh
+
 book:
   title: "空间数据科学与 R 语言"
   subtitle: "探索和实践"
@@ -16,28 +18,27 @@ book:
   site-url: https://evalparse.github.io/sdsr/
   repo-url: https://github.com/evalparse/sdsr/
   repo-branch: main
-  repo-actions: [edit]
+  repo-actions: [edit, issue, source]
+  search: true
+  downloads: [pdf]
 
 bibliography: references.bib
-
-
 
 format:
   html:
     theme: cosmo
+    code-fold: true
+    code-tools: true
     crossref:
       chapters: true
-      fig-title: "图"
-      tbl-title: "表"
-      fig-prefix: "图"
-      tbl-prefix: "表"
+      eq-prefix: ""
   pdf:
     documentclass: ctexbook
-    classoption: [a4, UTF8]
+    classoption: [UTF8,twoside,openany,table]
+    keep-tex: false
     lof: true
     lot: true
     toc: true
-    toc-title: 目录
     toc-depth: 3
     geometry:
       - tmargin=2.5cm
@@ -48,14 +49,10 @@ format:
     number-sections: true
     top-level-division: chapter
     colorlinks: true
+    link-citations: true
     crossref:
       chapters: true
-      fig-title: "图"
-      tbl-title: "表"
-      lof-title: "图目录"
-      lot-title: "表目录"
-      fig-prefix: "图"
-      tbl-prefix: "表"
+      eq-prefix: ""
 
 editor: visual
 

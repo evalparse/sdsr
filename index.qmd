@@ -1,6 +1,6 @@
 # 前言 {.unnumbered}
 
-本书是在[Quarto](https://quarto.org/docs/books)编辑的，为可重复性，书籍写作环境由 Docker 搭建，基础环境来自 [rocker](https://github.com/rocker-org) 项目提供的空间数据 [geospatial](https://github.com/rocker-org/rocker-versioned2) 镜像。首先安装 Docker 桌面客户端，拉取远程镜像文件：
+本书是在 RStudio IDE 内用 [Quarto](https://quarto.org/docs/books) 编辑的，为可重复性，写作环境由 Docker 搭建，基础环境来自 [rocker](https://github.com/rocker-org) 项目提供的空间数据 [geospatial](https://github.com/rocker-org/rocker-versioned2) 镜像。首先安装 [Docker](https://www.docker.com/) 桌面客户端，拉取远程镜像文件：
 
 ``` bash
 brew install --cask homebrew/cask/docker
